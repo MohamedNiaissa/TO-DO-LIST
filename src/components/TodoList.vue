@@ -7,8 +7,13 @@
 <script>
 
 import TodoListItem from './TodoListItem.vue';
+import useFirstStore from '../store/firstStore'
+import { mapState } from 'pinia'
+import { mapActions } from 'pinia'
+
 export default {
     name: "TodoList",
+    components: { TodoListItem },
     data(){
       return {
         tasks : [ {name : "example",todos : [{item : "Do this", status : "In progress"},{item : "Do ", status : "Done"}]}],
@@ -38,10 +43,16 @@ export default {
       },
       deleteList(tasks,index){
         tasks.splice(index,1);
-      }
+      },
+      ...mapActions(useFirstStore, ["actionTest"] )
     },
+    computed: {
+      ...mapState(useFirstStore, ["actionTest"] )
+    },
+    mounted() {
+      this.actionTest()
+    }
     
-    components: { TodoListItem }
 }
 </script>
 
